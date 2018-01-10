@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Process Mentior</title>
+    {% block body %}
+  <ul>
+  {% for pid,name in process %}
+    <li><a href="detail/{{ pid}}">{{ name }}</a></li>
+  {% endfor %}
+  </ul>
+{% endblock %}
+</head>
+<body>
+
+</body>
+</html>

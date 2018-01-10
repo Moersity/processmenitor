@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="https://static.jianshukeji.com/highcharts/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>.highcharts-axis-resizer {
+        stroke: #eee;
+    }
+
+    .highcharts-axis-resizer:hover {
+        stroke: #ccc;
+    }
+    </style>
+    <script src="https://img.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script src="https://img.hcharts.cn/highstock/highstock.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+</head>
+<body>
+
+
+<div id="container" style="min-width:400px;height:400px"></div>
+
+<script>
+    $.getJSON('/process/'+{{ pid|tojson }}, function (data) {
+
+        // 去掉多余的数据
+        Highcharts.each(data, function (d) {
+            d.length = 2;
+        });
+        Highcharts.stockChart('container', {
+            rangeSelector: {
+                selected: 2
+            },
+            title: {
+                text: 'Process information billing statistics'
+            },
+            plotOptions: {
+                series: {
+                    showInLegend: true
+                }
+            },
+            tooltip: {
+                split: false,
+                shared: true
+            },
+            series: [{
+                // type: 'line',
+                id: '000001',
+                name: '平安银行',
+                data: data
+            }]
+        });
+    });
+
+</script>
+</body>
+</html>
