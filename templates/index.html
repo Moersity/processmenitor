@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <title>Process Mentior</title>
     {% block body %}
-  <ul>
-  {% for pid,name in process %}
-    <li><a href="detail/{{ pid}}">{{ name }}</a></li>
-  {% endfor %}
-  </ul>
-{% endblock %}
-</head>
-<body>
+        <p id="init">系统初始化过程中</p>
+        <button id="reload" style="visibility: hidden" onclick="function () {
+              location.reload()
+        }">查看结果
+        </button>
+        <ul>
+            {% for pid,name in process %}
+                <li><a href="detail/{{ pid }}">{{ name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+    <script>
+        document.getElementById("init").textContent = "初始化结束"
+        document.getElementById("reload").click()
 
-</body>
+    </script>
+</head>
 </html>

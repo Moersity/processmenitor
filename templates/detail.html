@@ -19,11 +19,13 @@
 </head>
 <body>
 
-
-<div id="container" style="min-width:400px;height:400px"></div>
-
+<div>
+    <div id="container" style="min-width:400px;height:400px"></div>
+    <div id="container2" style="min-width:400px;height:400px"></div>
+    <div id="info"></div>
+</div>
 <script>
-    $.getJSON('/process/'+{{ pid|tojson }}, function (data) {
+    $.getJSON('/process/' +{{ pid|tojson }}, function (data) {
 
         // 去掉多余的数据
         Highcharts.each(data, function (d) {
@@ -34,7 +36,7 @@
                 selected: 2
             },
             title: {
-                text: 'Process information billing statistics'
+                text: '内存占用率'
             },
             plotOptions: {
                 series: {
@@ -46,13 +48,56 @@
                 shared: true
             },
             series: [{
-                // type: 'line',
-                id: '000001',
-                name: '平安银行',
-                data: data
-            }]
+                type: 'line',
+                id: data.pid,
+                name: '内存占用率',
+                data: data.memory_percent
+            },
+            ]
         });
     });
+
+</script>
+<script>
+    $.getJSON('/process/' +{{ pid|tojson }}, function (data) {
+
+        Highcharts.each(data, function (d) {
+            d.length = 2;
+        });
+        Highcharts.stockChart('container2', {
+            rangeSelector: {
+                selected: 2
+            },
+            title: {
+                text: 'cpu占用率'
+            },
+            plotOptions: {
+                series: {
+                    showInLegend: true
+                }
+            },
+            tooltip: {
+                split: false,
+                shared: true
+            },
+            series: [{
+                type: 'line',
+                id: data.pid,
+                name: 'cpu占用率',
+                data: data.cpu_percent
+            },
+            ]
+        });
+        info = document.getElementById('info');
+        node = document.createTextNode(data.info);
+        info.appendChild(node);
+
+    });
+
+
+</script>
+<script>
+    info = document.getElementById('info')
 
 </script>
 </body>
