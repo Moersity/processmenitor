@@ -20,6 +20,5 @@ class pModel:
         res = {}
         for a in attrs:
             res[a] = self.__getattribute__(a)
-        res["info"] = res["info"].replace("\\","")
         return json.dumps(res)
 
