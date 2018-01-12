@@ -55,22 +55,23 @@ def updateData():
         for pid in psutil.pids():
             try:
                 p = psutil.Process(pid)
+                percent = p.cpu_percent(0.1)
+                info = json.dumps(dict(p.as_dict()))
+                paper = dict(p.as_dict())
+                create_time = paper["create_time"]
+                para = (pid, p.name(), int(time.time()), percent, info, create_time)
+                sql = "insert into process (pid,pname,time,cpupercent,info,create_time) VALUES (?,?,?,?,?,?)"
+                c.execute(sql, para)
+                conn.commit()
             except:
                 continue
-            percent = p.cpu_percent(0.1)
-            info = json.dumps(dict(p.as_dict()))
-            paper = dict(p.as_dict())
-            create_time = paper["create_time"]
-            para = (pid,p.name(), int(time.time()), percent,info,create_time)
-            sql = "insert into process (pid,pname,time,cpupercent,info,create_time) VALUES (?,?,?,?,?,?)"
-            c.execute(sql, para)
-            conn.commit()
+
             #print(create_time)
-            logger.info("inset process "+str(pid)+"information to process table",extra=d)
+            logger.info("inset process "+str(pid)+" information to process table",extra=d)
         c.close()
 
 
 if __name__ == '__main__':
- #  initialTable()
+   # initialTable()
     updateData()
 

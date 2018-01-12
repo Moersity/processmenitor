@@ -16,6 +16,7 @@ def index():
         for p in process_infos:
             if hasattr(p,'info'):
                 p.info = json.loads(p.info)
+                p.create_time = time.strftime( "%Y-%m-%d %H:%M:%S",time.localtime(p.create_time))
                 p.hasinfo = True
             else:
                 p.hasinfo = False
@@ -36,4 +37,4 @@ def process_info(pid):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0',port=5000)

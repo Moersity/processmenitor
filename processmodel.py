@@ -5,7 +5,7 @@ class pModel:
     def __init__(self,pid):
         self.cpu_percent,self.memory_percent= [],[]
         cur = conn.cursor()
-        cur.execute('select * from process where pid=? ',(pid,))
+        cur.execute('select * from process where pid=?  limit 10',(pid,))
         for line in cur.fetchall():
             info = json.loads(line[5])
             self.cpu_percent.append((line[3],line[4]))
