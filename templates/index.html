@@ -3,22 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Process Mentior</title>
-    {% block body %}
-        <p id="init">系统初始化过程中</p>
-        <button id="reload" style="visibility: hidden" onclick="function () {
-              location.reload()
-        }">查看结果
-        </button>
-        <ul>
-            {% for pid,name in process %}
-                <li><a href="detail/{{ pid }}">{{ name }}</a></li>
-            {% endfor %}
-        </ul>
-    {% endblock %}
-    <script>
-        document.getElementById("init").textContent = "初始化结束"
-        document.getElementById("reload").click()
+    <style>
+		table {
 
-    </script>
+                border-right: 1px solid skyblue;
+
+                border-bottom: 1px solid skyblue;
+
+                border-collapse:collapse;
+        }
+        table th{
+                border-left: 1px solid skyblue;
+
+                border-top: 1px solid skyblue;
+
+                text-align:center;
+        }
+        table td {
+
+                border-left: 1px solid skyblue;
+
+                border-top: 1px solid skyblue;
+
+                text-align:center;
+        }
+	</style>
+    {% block body %}
+
+        <table class="table" width="100%">
+
+
+              <thead>
+                    <tr>
+                        <th>ProcessName</th>
+                        <th>PID</th>
+                        <th>Create_time</th>
+                        <th>Num_threads</th>
+                        <th>Num_handles</th>
+                        <th>Status</th>
+                        <th>查看部分折线图</th>
+                    </tr>
+                </thead>
+            {% for info in  process_info if info.hasinfo %}
+                <tbody>
+                    <tr>
+                        <td>{{ info.name }}</td>
+                        <td>{{ info.pid }}</td>
+                        <td>{{ info.create_time }}</td>
+
+                        <td>{{ info.info.num_threads }}</td>
+                        <td>{{ info.info.num_handles }}</td>
+                        <td>{{ info.info.status }}</td>
+                        <td><input type="button" value="点击查看"  style="background:cornflowerblue "
+                                                               onclick=window.location.href="detail/{{ info.pid }}"></td>
+
+                    </tr>
+                </tbody>
+
+            {% endfor %}
+        </table>
+    {% endblock %}
+
+
 </head>
+   <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<!-- <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+<!-- <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+
 </html>
