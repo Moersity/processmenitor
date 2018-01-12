@@ -18,13 +18,38 @@
 <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data-2012-2022.min.js"></script>
+<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
 </head>
 <body>
 
 <div>
     <div id="container" style="min-width:400px;height:400px"></div>
     <div id="container2" style="min-width:400px;height:400px"></div>
+<div class="panel panel-primary ">
+            <div class="panel-heading">
+              <h3 class="panel-title">计费信息</h3>
+            </div>
+            <div class="panel-body">
+              <p id ="billing" class="font-italic"></p>
+            </div>
+          </div>
+
 </div>
+<script>
+    p = document.getElementById("billing")
+    tax = Math.random()*100
+    tax = tax.toFixed(3)
+    p.innerText = "Average : "+ tax + "RMB/Hours"
+</script>
 <div id="info"></div>
 <script>
     $.getJSON('/process/' +{{ pid|tojson }}, function (data) {
